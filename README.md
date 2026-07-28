@@ -20,8 +20,15 @@ Usuário de execução: `node` (não-root)
 Tamanho final da imagem: ~58,1 MB (conteúdo da imagem, via `docker images`)
 Por que o multi-stage ajuda? Ele separa as ferramentas/dependências de build da imagem final, deixando-a menor e sem artefatos desnecessários (cache de instalação, devDependencies etc.).
 
+![docker build](docs/imagens/01-build.png)
+
+![docker images](docs/imagens/01-images.png)
+
 Print 1 — build + docker images
-Print 2 — aplicação rodando com tarefas cadastradas
+
+![container iniciado](docs/imagens/02-container-up.png)
+
+Print 2 — aplicação rodando com tarefas cadastradas (abrir http://localhost:3000 e cadastrar 2–3 tarefas)
 
 ## 3. Volumes e persistência
 Volume usado: `todo-db` → montado em `/etc/todos`
