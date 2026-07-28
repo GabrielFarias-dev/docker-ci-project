@@ -1,6 +1,6 @@
-# Atividade Docker + CI — [SEU NOME]
+# Atividade Docker + CI — Gabriel Farias De Sousa
 
-**Aluno(a):** [nome completo]  **Turma:** [turma]  **Data:** [data]
+**Aluno(a):** Gabriel Farias De Sousa  **Turma:** Noturno  **Data:** 27/07/2026
 **Aplicação usada:** docker/getting-started-app — To-Do em Node.js
 
 ## 1. Como executar este projeto
@@ -17,7 +17,7 @@ Para derrubar: `docker compose down` (mantém dados) ou `docker compose down -v`
 Estágios utilizados: `builder` (instala dependências com `npm ci`) e estágio final (copia apenas `node_modules` + `src`).
 Imagem base: `node:20-alpine`
 Usuário de execução: `node` (não-root)
-Tamanho final da imagem: [preencher após `docker images`]
+Tamanho final da imagem: ~58,1 MB (conteúdo da imagem, via `docker images`)
 Por que o multi-stage ajuda? Ele separa as ferramentas/dependências de build da imagem final, deixando-a menor e sem artefatos desnecessários (cache de instalação, devDependencies etc.).
 
 Print 1 — build + docker images
@@ -27,12 +27,12 @@ Print 2 — aplicação rodando com tarefas cadastradas
 Volume usado: `todo-db` → montado em `/etc/todos`
 Print 3 — SEM volume: dados perdidos ao recriar o container
 Print 4 — COM volume: dados preservados
-Diferença entre `docker compose down` e `docker compose down -v`: [1 frase]
+Diferença entre `docker compose down` e `docker compose down -v`: `down` remove containers e rede mas mantém os volumes nomeados (dados sobrevivem); `down -v` também remove os volumes, apagando os dados.
 
 ## 4. Rede
-Rede criada: `todo-net`  Serviços conectados: [app e db]
+Rede criada: `todo-net`  Serviços conectados: app e db
 A porta do banco está exposta ao host? Não — o banco só precisa ser acessado pelo serviço `app` dentro da rede interna do Compose, expô-lo ao host aumentaria a superfície de ataque sem necessidade.
-Por que o app consegue chamar o host mysql/db sem saber o IP? [1 frase]
+Por que o app consegue chamar o host mysql/db sem saber o IP? Porque toda rede criada pelo Docker (ou pelo Compose) tem um DNS embutido que resolve o nome do serviço/container para o IP interno correto automaticamente.
 Print 5 — docker network inspect
 Print 6 — dados dentro do MySQL (select * from todo_items;)
 
@@ -64,16 +64,16 @@ Print 9 — execução vermelha + log do erro
 ![CI vermelho voltando a verde](docs/imagens/09b-ci-vermelho-para-verde.png)
 
 ## 8. Dificuldades e aprendizados
-[3–5 linhas]
+A maior dificuldade foi rodar a imagem como usuário não-root: o processo falhava com `EACCES` ao tentar criar `/etc/todos`, porque esse diretório pertence ao root por padrão — resolvido criando a pasta e ajustando o dono (`chown`) para o usuário `node` ainda no Dockerfile, antes do `USER node`. Outro ponto de atenção foi o MySQL: passar `MYSQL_USER=root` para o container do banco faz o entrypoint oficial abortar (ele reserva esse env para o usuário do app, não para o root do banco), então esse env só pode ir para o serviço `app`. Também aprendi na prática a diferença entre `docker compose down` e `down -v`, e como o `healthcheck` + `depends_on: condition: service_healthy` evita a race condition clássica do app subindo antes do banco estar pronto.
 
 ## 9. Checklist de autoavaliação
-- [ ] Dockerfile multi-stage funcionando
-- [ ] .dockerignore presente
-- [ ] Container não roda como root
-- [ ] Volume nomeado + persistência demonstrada
-- [ ] Rede nomeada + banco não exposto ao host
-- [ ] compose.yaml sobe tudo com um comando
-- [ ] .env no .gitignore e .env.example versionado
-- [ ] CI verde
-- [ ] PR com CI vermelho documentado
+- [x] Dockerfile multi-stage funcionando
+- [x] .dockerignore presente
+- [x] Container não roda como root
+- [x] Volume nomeado + persistência demonstrada
+- [x] Rede nomeada + banco não exposto ao host
+- [x] compose.yaml sobe tudo com um comando
+- [x] .env no .gitignore e .env.example versionado
+- [x] CI verde
+- [x] PR com CI vermelho documentado
 - [ ] Todos os 9 prints no README
