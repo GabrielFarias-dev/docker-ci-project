@@ -28,7 +28,9 @@ Print 1 — build + docker images
 
 ![container iniciado](docs/imagens/02-container-up.png)
 
-Print 2 — aplicação rodando com tarefas cadastradas (abrir http://localhost:3000 e cadastrar 2–3 tarefas)
+![app rodando com tarefas](docs/imagens/02-app-rodando.png)
+
+Print 2 — aplicação rodando com tarefas cadastradas
 
 ## 3. Volumes e persistência
 Volume usado: `todo-db` → montado em `/etc/todos`
