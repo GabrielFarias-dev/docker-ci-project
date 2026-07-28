@@ -40,6 +40,14 @@ Volume usado: `todo-db` → montado em `/etc/todos`
 
 Print 3 — SEM volume: dados perdidos ao recriar o container
 
+![com volume: create + run](docs/imagens/04-volume-create.png) ![com volume: run](docs/imagens/04-run-com-volume.png)
+
+![com volume: tarefas cadastradas](docs/imagens/04-tarefas-cadastradas.png)
+
+![com volume: recria container](docs/imagens/04b-run-com-volume.png) ![docker volume ls](docs/imagens/04-volume-ls.png)
+
+![com volume: tarefas mantidas apos recriar](docs/imagens/04b-tarefas-mantidas.png)
+
 Print 4 — COM volume: dados preservados
 Diferença entre `docker compose down` e `docker compose down -v`: `down` remove containers e rede mas mantém os volumes nomeados (dados sobrevivem); `down -v` também remove os volumes, apagando os dados.
 
