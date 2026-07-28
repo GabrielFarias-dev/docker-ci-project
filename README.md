@@ -34,7 +34,12 @@ Print 2 — aplicação rodando com tarefas cadastradas
 
 ## 3. Volumes e persistência
 Volume usado: `todo-db` → montado em `/etc/todos`
+![sem volume: rm + run](docs/imagens/03-rm-todo.png) ![sem volume: run](docs/imagens/03-run-sem-volume.png)
+
+![sem volume: lista vazia](docs/imagens/03-lista-vazia.png)
+
 Print 3 — SEM volume: dados perdidos ao recriar o container
+
 Print 4 — COM volume: dados preservados
 Diferença entre `docker compose down` e `docker compose down -v`: `down` remove containers e rede mas mantém os volumes nomeados (dados sobrevivem); `down -v` também remove os volumes, apagando os dados.
 
