@@ -43,7 +43,7 @@ jobs:
             -H 'Content-Type: application/json' \
             -d '{"id":"ci-test-1","name":"tarefa criada pelo CI","completed":false}'
           echo ""
-          curl -sf http://localhost:3000/items-inexistente | tee resposta.json
+          curl -sf http://localhost:3000/items | tee resposta.json
           grep -q "tarefa criada pelo CI" resposta.json
 
       - name: Logs em caso de falha
