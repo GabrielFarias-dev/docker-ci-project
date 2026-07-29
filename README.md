@@ -55,13 +55,30 @@ Diferença entre `docker compose down` e `docker compose down -v`: `down` remove
 Rede criada: `todo-net`  Serviços conectados: app e db
 A porta do banco está exposta ao host? Não — o banco só precisa ser acessado pelo serviço `app` dentro da rede interna do Compose, expô-lo ao host aumentaria a superfície de ataque sem necessidade.
 Por que o app consegue chamar o host mysql/db sem saber o IP? Porque toda rede criada pelo Docker (ou pelo Compose) tem um DNS embutido que resolve o nome do serviço/container para o IP interno correto automaticamente.
+
+![docker network inspect - comandos e inicio do JSON](docs/imagens/05-network-inspect-a.png)
+
+![docker network inspect - containers conectados](docs/imagens/05-network-inspect-b.png)
+
 Print 5 — docker network inspect
+
+![tarefa cadastrada via app antes de consultar o banco](docs/imagens/06-app-tarefa-cadastrada.png)
+
+![login no MySQL](docs/imagens/06-mysql-login.png)
+
+![select * from todo_items retornando a tarefa](docs/imagens/06-mysql-select.png)
+
 Print 6 — dados dentro do MySQL (select * from todo_items;)
 
 ## 5. Docker Compose
 Serviços: `app`, `db`  Rede: `todo-net` · Volume: `todo-mysql-data`
 Healthcheck em: `db` · depends_on com: `condition: service_healthy`
 Variáveis sensíveis: carregadas via `.env` (não versionado). Modelo em `.env.example`.
+
+![docker compose build](docs/imagens/07-compose-build.png)
+
+![docker compose ps - app e db Up/healthy](docs/imagens/07-compose-ps.png)
+
 Print 7 — docker compose ps
 
 ## 6. Integração Contínua (GitHub Actions)
@@ -98,4 +115,4 @@ A maior dificuldade foi rodar a imagem como usuário não-root: o processo falha
 - [x] .env no .gitignore e .env.example versionado
 - [x] CI verde
 - [x] PR com CI vermelho documentado
-- [ ] Todos os 9 prints no README
+- [x] Todos os 9 prints no README
